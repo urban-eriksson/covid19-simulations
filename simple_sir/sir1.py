@@ -7,7 +7,7 @@ import numpy as np
 n_days = 40
 R0 = 2 # How many in total will a person infect if everyone is susceptible 
 effective_infective_duration = 2 # For what duration will the infection period be
-beta = R0 / 2
+beta = R0 / effective_infective_duration
 gamma = 1 / effective_infective_duration
 
 infectives = [0.001]
