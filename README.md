@@ -3,7 +3,9 @@ Different approaches for the simulation of spread and decline of covid19
 
 First commit simple_sir. Visual studio code project
 
-Todo: incubation time, proximity factor (1-dimensional?), fit parameters to real data. Probably there is a need take into account the probability for an infected person to be identified as "confirmed".
+Todo: incubation time, proximity factor (1-dimensional?), fit parameters to real data. 
+- Probably there is a need take into account the probability for an infected person to be identified as "confirmed".
+- The R0 is definitely a function of time. One can for simplicity have two values. One before and one after lockdown.
 
 ## Data read 
 
