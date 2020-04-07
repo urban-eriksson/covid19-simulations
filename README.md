@@ -9,7 +9,7 @@ Todo: incubation time, proximity factor (1-dimensional?), fit parameters to real
 
 ## SEIRD model
 
-Susceptible-Exposed-Infectous-Recovered-Deceased
+Susceptible-Exposed-Infectious-Recovered-Deceased
 
 To make a run a few constants need to be specified such as R0, incubation perios, CFR etc.
 
