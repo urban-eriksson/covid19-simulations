@@ -7,6 +7,22 @@ Todo: incubation time, proximity factor (1-dimensional?), fit parameters to real
 - Probably there is a need take into account the probability for an infected person to be identified as "confirmed".
 - The R0 is definitely a function of time. One can for simplicity have two values. One before and one after lockdown.
 
+## SEIRD model
+
+Susceptible-Exposed-Infectous-Recovered-Deceased
+
+<p align="center"> 
+<img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/seired.png">
+</p>
+
+A few constants need to be specified such as R0, incubation perios, CFR etc.
+
+<p align="center"> 
+<img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/daily_figures.png">
+</p>
+
+The daily figures in numbers need the total population size to be specified. 
+
 ## Data read 
 
 From John Hopkins (https://github.com/CSSEGISandData/)
