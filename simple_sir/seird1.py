@@ -54,31 +54,32 @@ class Decimator:
 # https://www.maplesoft.com/applications/download.aspx?SF=127836/SIRModel.pdf
 
 R0 = 2 # How many in total will a person infect if everyone is susceptible 
+CFR = 0.04 # case fatality rate if defined as how many of confirmed will die
+MTD = 15 # mean time to death from showing infection
+ICR = 0.2 # infected to confirmed ratio
+initially_exposed = 0.001
+
 effective_infectious_duration = 2 # For what duration will the infection period be
 beta = R0 / effective_infectious_duration
 gamma = 1 / effective_infectious_duration
-
-
 incubation_period = 5
 dt = 0.1
 incubator = Incubator(incubation_period, dt)
-
-CFR = 0.04 # case fatality rate
-mean_time_to_death = 15 # from showing infection
-decimator = Decimator(mean_time_to_death, dt)
+decimator = Decimator(MTD, dt)
 
 # seed values
-exposed = [0.001]
+days = [0]
+exposed = [initially_exposed]
 incubator.add_exposed(exposed[0])
 infectious = [0] 
 susceptibles = [1 - exposed[0]]
 recovered = [0]
+confirmed = [0]
+dailyconfirmed = [0]
 icutreatment = [0]
 deceased = [0]
-checksum = [1]
-dailyconfirmed = [0]
 dailydeceased = [0]
-days = [0]
+checksum = [1]
 
 n_days = 120
 t = 0
@@ -90,15 +91,16 @@ while t < n_days:
     new_deceased = decimator.get_deceased()
 
     susceptibles.append(susceptibles[-1] - new_exposed)
-    infectious.append(infectious[-1] + (1-CFR)*new_infected  - new_recovered)   
+    infectious.append(infectious[-1] + (1 - CFR * ICR) * new_infected  - new_recovered)   
     recovered.append(recovered[-1] + new_recovered)
     incubator.add_exposed(new_exposed)
     exposed.append(incubator.get_exposed())
-    decimator.add_infected(CFR*new_infected)
+    decimator.add_infected(CFR * ICR * new_infected) 
     deceased.append(deceased[-1] + new_deceased)
     icutreatment.append(decimator.get_infected()) # todo, number in icu treament are higher than will be deceased
 
-    dailyconfirmed.append(new_infected) # todo, just a fraction of infected are confirmed
+    confirmed.append(confirmed[-1] + ICR * new_infected)
+    dailyconfirmed.append(ICR * new_infected) 
     dailydeceased.append(new_deceased)
 
 
