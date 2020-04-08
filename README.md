@@ -9,19 +9,20 @@ Todo: incubation time, proximity factor (1-dimensional?), fit parameters to real
 
 ## SEIRD model
 
-Susceptible-Exposed-Infectous-Recovered-Deceased
+Susceptible-Exposed-Infectious-Recovered-Deceased
+
+To make a run a few constants need to be specified such as R0, incubation perios, CFR etc.
 
 <p align="center"> 
-<img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/seired.png">
+<img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/seird.png">
 </p>
 
-A few constants need to be specified such as R0, incubation perios, CFR etc.
+To get the daily figures in numbers, the total population size needs to be specified. 
 
 <p align="center"> 
 <img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/daily_figures.png">
 </p>
 
-The daily figures in numbers need the total population size to be specified. 
 
 ## Data read 
 
