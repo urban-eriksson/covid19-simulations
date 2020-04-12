@@ -1,6 +1,21 @@
 # covid19-simulations
 Different approaches for the simulation of spread and decline of covid19
 
+## Simulations using SEIRD model (simulations1.py)
+
+<p align="center"> 
+<img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/seird3.png">
+</p>
+
+<p align="center"> 
+<img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/seird2.png">
+</p>
+
+<p align="center"> 
+<img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/sweden1.png">
+</p>
+
+
 First commit simple_sir. Visual studio code project
 
 Todo: incubation time, proximity factor (1-dimensional?), fit parameters to real data. 
