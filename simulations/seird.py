@@ -48,7 +48,7 @@ class Decimator:
         self._queue = np.append(self._queue[1:], fraction)
 
 
-def calculate_confirmed_and_deceased(x, n_days=120):
+def seird_simulate(x, n_days=120, dt=0.1):
     '''
     R0 = 2 # How many in total will a person infect if everyone is susceptible 
     CFR = 0.04 # case fatality rate if defined as how many of confirmed will die
@@ -57,17 +57,17 @@ def calculate_confirmed_and_deceased(x, n_days=120):
     initially_exposed = 0.001
     '''
 
-    R0 = x[0]
-    CFR = x[1]
-    MTD = x[2]
-    ICR = x[3]
-    initially_exposed = x[4]
+    initially_exposed = x[0]
+    R0 = x[1]
+    #MTD = 2 + np.exp(x[2])
+    MTD = 8
+    ICR = x[2]
+    CFR = x[3]
 
-    effective_infectious_duration = 2 # For what duration will the infection period be
+    effective_infectious_duration = 2 # For what duration will the infectant be infectous
     beta = R0 / effective_infectious_duration
     gamma = 1 / effective_infectious_duration
     incubation_period = 5
-    dt = 0.1
     incubator = Incubator(incubation_period, dt)
     decimator = Decimator(MTD, dt)
 
@@ -84,8 +84,10 @@ def calculate_confirmed_and_deceased(x, n_days=120):
     deceased = [0]
     dailydeceased = [0]
     checksum = [1]
+    confirmed_out = []
+    deceased_out = []
+    days_out = []
 
-    n_days = 120
     t = 0
     while t < n_days:
 
@@ -104,12 +106,37 @@ def calculate_confirmed_and_deceased(x, n_days=120):
         icutreatment.append(decimator.get_infected()) # todo, number in icu treament are higher than will be deceased
 
         confirmed.append(confirmed[-1] + ICR * new_infected)
-        dailyconfirmed.append(ICR * new_infected) 
-        dailydeceased.append(new_deceased)
+        dailyconfirmed.append(ICR * new_infected / dt) 
+        dailydeceased.append(new_deceased / dt)
 
 
         checksum.append(infectious[-1] + recovered[-1] + susceptibles[-1] + exposed[-1] + deceased[-1] + icutreatment[-1])
         t = t + dt
+
+        if int(t-dt/2) != int(t+dt/2):
+            confirmed_out.append(confirmed[-1])
+            deceased_out.append(deceased[-1])
+            days_out.append(t)
+            
+
+
         days.append(t)
 
-    return confirmed, deceased
+    output =  {
+        'time': days_out,
+        'confirmed': confirmed_out,
+        'deceased': deceased_out,
+        'plot_data': {
+            'time': days,
+            'infectious': infectious,
+            'exposed': exposed,
+            'deceased': deceased,
+            'susceptibles': susceptibles,
+            'recovered': recovered,
+            'icutreatment': icutreatment,
+            'daily_confirmed': dailyconfirmed,
+            'daily_deceased': dailydeceased
+        }
+    }
+
+    return output
