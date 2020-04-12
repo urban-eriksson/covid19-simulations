@@ -20,9 +20,19 @@ def plot_comparison(official,simulated, titstr):
 
 #country = 'Italy'
 #N = 60.36e6
-country = 'Sweden'
-N = 10.23e5
-official = extract_confirmed_deceased(country)
+#country = 'Sweden'
+#N = 10.23e6
+#country = 'Spain'
+#N = 46.94e6
+#country = 'United Kingdom'
+#N = 66.65e6
+#country = 'Germany'
+#N = 83.02e6
+country = 'US'
+N = 328.2e6
+
+
+official = extract_confirmed_deceased(country,N)
 
 initially_exposed = 0.01
 R0 = 3 # How many in total will a person infect if everyone is susceptible 
@@ -44,7 +54,7 @@ def loss_function(x):
     print(loss*1e8)
     return loss
 
-xopt = minimize(loss_function, x0, method='Nelder-Mead', tol=1e-6, options={'maxiter': 50})
+xopt = minimize(loss_function, x0, method='Nelder-Mead', tol=1e-6, options={'maxiter': 70})
 R0opt = f'{xopt["x"][1]:.3f}'
 ICRopt = f'{xopt["x"][2]:.3f}'
 CFRopt = f'{xopt["x"][3]:.3f}'
@@ -54,7 +64,7 @@ print('Initally exposed: ' + str(xopt['x'][0]))
 print('R0: ' + R0opt)
 print('ICR: ' + ICRopt)
 print('CFR: ' + CFRopt)
-simulated = seird_simulate(xopt['x'], Npoints + 40)
+simulated = seird_simulate(xopt['x'], Npoints + 60)
 
 plot_comparison(official, simulated, 'Country=' + country + ', R0=' + R0opt + ', ICR=' + ICRopt + ', CFR=' + CFRopt )
 
@@ -85,11 +95,13 @@ plt.plot(official['time'],official['daily_confirmed'],pdata['time'],[N*x for x i
 plt.legend(['Official daily confirmed','Simulated daily confirmed'])
 #plt.xlabel('Days')
 plt.ylabel('Count')
+plt.grid()
 
 plt.subplot(2, 1, 2)
 plt.plot(official['time'],official['daily_deceased'],pdata['time'],[N*x for x in pdata['daily_deceased']])
 plt.legend(['Official daily deceased','Simulated daily deceased'])
 plt.xlabel('Days')
 plt.ylabel('Count')
+plt.grid()
 
 plt.show()
