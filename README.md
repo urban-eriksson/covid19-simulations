@@ -3,6 +3,8 @@ Different approaches for the simulation of spread and decline of covid19
 
 ## The SEIRID model
 
+A somewhat simplified model in (seird2.py) used in simulations2.py.
+
 <p align="center"> 
 <img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/model1.png">
 </p>
