@@ -1,5 +1,21 @@
 import numpy as np 
 
+
+# The latency period of exposed before getting infectous
+class IncubatorSimple:
+    def __init__(self, incubation_time, dt):
+        N = int(incubation_time  / dt) + 1
+        self._queue = np.zeros(N)
+
+    def get_infected(self):
+        return self._queue[0]
+
+    def get_exposed(self):
+        return sum(self._queue)
+
+    def add_exposed(self, fraction):
+        self._queue = np.append(self._queue[1:], fraction)
+
 # The latency period of exposed before getting infectous
 class Incubator:
     def __init__(self, mu, dt, sigma=None):
@@ -23,6 +39,21 @@ class Incubator:
     def add_exposed(self, fraction):
         self._queue = np.append(self._queue[1:], fraction)
 
+
+class DecimatorSimple:
+    def __init__(self, time_to_death, dt):
+        N = int(time_to_death  / dt) + 1
+        self._queue = np.zeros(N)
+
+    def get_deceased(self):
+        return self._queue[0]
+
+    # i.e. People treated in ICU etc. It can be made part of the infectous or not
+    def get_infected(self):
+        return sum(self._queue)
+
+    def add_infected(self, fraction):
+        self._queue = np.append(self._queue[1:], fraction)
 
 # Lethally infected enters here at the moment they are infected 
 # determined by the cfr (case fatality rate)
@@ -60,16 +91,20 @@ def seird_simulate(x, n_days=120, dt=0.1):
     initially_exposed = x[0]
     R0 = x[1]
     #MTD = 2 + np.exp(x[2])
-    MTD = 8
-    ICR = x[2]
-    CFR = x[3]
+    MTD = 5
+    #ICR = x[2]
+    ICR = 0.01
+    CFR = x[2]
+    #MTD = x[3]
 
     effective_infectious_duration = 2 # For what duration will the infectant be infectous
     beta = R0 / effective_infectious_duration
     gamma = 1 / effective_infectious_duration
-    incubation_period = 5
+    incubation_period = 3
     incubator = Incubator(incubation_period, dt)
     decimator = Decimator(MTD, dt)
+    #incubator = IncubatorSimple(incubation_period, dt)
+    #decimator = DecimatorSimple(MTD, dt)
 
     # seed values
     days = [0]

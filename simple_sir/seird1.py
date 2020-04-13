@@ -2,6 +2,22 @@ import matplotlib.pyplot as plt
 import numpy as np 
 
 # The latency period of exposed before getting infectous
+class IncubatorSimple:
+    def __init__(self, incubation_time, dt):
+        N = int(incubation_time  / dt) + 1
+        self._queue = np.zeros(N)
+
+    def get_infected(self):
+        return sum(self._queue[0])
+
+    def get_exposed(self):
+        return sum(self._queue)
+
+    def add_exposed(self, fraction):
+        self._queue = np.append(self._queue[1:], fraction)
+
+
+# The latency period of exposed before getting infectous
 class Incubator:
     def __init__(self, mu, dt, sigma=None):
         if not sigma:
@@ -48,6 +64,20 @@ class Decimator:
     def add_infected(self, fraction):
         self._queue = np.append(self._queue[1:], fraction)
 
+class DecimatorSimple:
+    def __init__(self, time_to_death, dt):
+        N = int(time_to_death  / dt) + 1
+        self._queue = np.zeros(N)
+
+    def get_deceased(self):
+        return sum(self._queue[0])
+
+    # i.e. People treated in ICU etc. It can be made part of the infectous or not
+    def get_infected(self):
+        return sum(self._queue)
+
+    def add_infected(self, fraction):
+        self._queue = np.append(self._queue[1:], fraction)
 
 
 

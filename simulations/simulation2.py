@@ -1,7 +1,7 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 from read_data import extract_confirmed_deceased
-from seird import seird_simulate
+from seird2 import seird_simulate
 from scipy.optimize import minimize
 
 def plot_comparison(official,simulated, titstr):
@@ -18,10 +18,10 @@ def plot_comparison(official,simulated, titstr):
     plt.ylabel('Count')
     plt.show()
 
-country = 'Italy'
-N = 60.36e6
-#country = 'Sweden'
-#N = 10.23e6
+#country = 'Italy'
+#N = 60.36e6
+country = 'Sweden'
+N = 10.23e6
 #country = 'Spain'
 #N = 46.94e6
 #country = 'United Kingdom'
@@ -36,11 +36,11 @@ official = extract_confirmed_deceased(country,N)
 
 initially_exposed = 0.005
 R0 = 2.5 # How many in total will a person infect if everyone is susceptible 
-ICR = 0.02 # infected to confirmed ratio
-CFR = 0.1 # case fatality rate if defined as how many of confirmed will die
-MTD = 5 # mean time to death from showing infection
+IIC = 0.02 # infected to intensive care coefficient (rest goes to recovered)
+IDC = 0.5 # intensive care to deceased coefficient
+ICR = 0.01
 
-x0 = [initially_exposed, R0, CFR]
+x0 = [initially_exposed, R0, IIC, ICR]
 
 Npoints = len(official['time'])
 simulated = seird_simulate(x0, Npoints)
@@ -50,11 +50,13 @@ plot_comparison(official, simulated, 'Initial conditions')
 def loss_function(x):
     simulation = seird_simulate(x,Npoints)
     loss = sum([(c1 / N - c2)**2 for c1, c2 in zip(official['confirmed'], simulation['confirmed'])])
-    loss += 10*sum([(d1 / N - d2)**2 for d1, d2 in zip(official['deceased'], simulation['deceased'])])
+    loss += sum([(d1 / N - d2)**2 for d1, d2 in zip(official['deceased'], simulation['deceased'])])
     print(loss*1e8)
     return loss
 
-xopt = minimize(loss_function, x0, method='Nelder-Mead', tol=1e-6, options={'maxiter': 70})
+
+
+xopt = minimize(loss_function, x0, method='Nelder-Mead', tol=1e-6, options={'maxiter': 500})
 R0opt = f'{xopt["x"][1]:.3f}'
 #ICRopt = f'{xopt["x"][2]:.3f}'
 ICRopt = f'{ICR:.3f}'
