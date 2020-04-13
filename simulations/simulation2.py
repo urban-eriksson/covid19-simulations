@@ -59,15 +59,15 @@ def loss_function(x):
 xopt = minimize(loss_function, x0, method='Nelder-Mead', tol=1e-6, options={'maxiter': 500})
 R0opt = f'{xopt["x"][1]:.3f}'
 #ICRopt = f'{xopt["x"][2]:.3f}'
-ICRopt = f'{ICR:.3f}'
-CFRopt = f'{xopt["x"][2]:.3f}'
+IICopt = f'{xopt["x"][2]:.3f}'
+ICRopt = f'{xopt["x"][3]:.3f}'
 
 print('Final result')
 print(xopt['x'])
 print('Initally exposed: ' + str(xopt['x'][0]))
 print('R0: ' + R0opt)
+print('IIC: ' + IICopt)
 print('ICR: ' + ICRopt)
-print('CFR: ' + CFRopt)
 simulated = seird_simulate(xopt['x'], Npoints + 60)
 
 pdata = simulated['plot_data']
@@ -91,7 +91,7 @@ plt.grid()
 plt.show()
 
 
-plot_comparison(official, simulated, 'Country=' + country + ', R0=' + R0opt + ', ICR=' + ICRopt + ', CFR=' + CFRopt )
+plot_comparison(official, simulated, 'Country=' + country + ', R0=' + R0opt + ', ICR=' + ICRopt + ',IIC=' + IICopt )
 
 
 plt.subplot(3, 1, 1)
