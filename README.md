@@ -1,6 +1,12 @@
 # covid19-simulations
 Different approaches for the simulation of spread and decline of covid19
 
+## The SEIRID model
+
+<p align="center"> 
+<img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/model1.png">
+</p>
+
 ## Simulations using SEIRD model (simulations1.py)
 
 These simulations points towards herd immunity and a high infected-to-confirmed ratio (ICR) of about x30
