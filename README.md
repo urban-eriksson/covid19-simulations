@@ -1,3 +1,7 @@
+# What is herd immunity
+
+Herd immunity is a term for the situation when an infectious disease shows a declining spread due to the fact that some percentage of a population is immune to the infection. The percentage required to reach herd immunity is not some fixed percentage. It is furthermore not solely given by R0, the reproduction number of the particular disease, as measured in a population at the early stages of an epidemic. Instead, the percentage required to reach herd immunity is only dependent on the effective reproduction number, Re, at a specific point in time. The Re can be broken down into serveral contributing factors. The R0, how contagious the disease is, is the starting point, but then there are several other things which influences Re, like social distancing, washing hands, wearing masks, and contact tracing and so on. These measures will affect how large percentage is required to reach herd immunity, and if they are effective enough the percentage will go towards zero. An application has been developed to show the effect on how many infected and deceased there will be in total depending on what measures are taken and how effective they are assumed to be.
+
 # covid19-simulations
 Different approaches for the simulation of spread and decline of covid19
 
