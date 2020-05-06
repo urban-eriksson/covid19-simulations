@@ -1,6 +1,9 @@
-# What is herd immunity
+# R0 - the reproduction number
 
-Herd immunity is a term for the situation when an infectious disease shows a declining spread due to the fact that a sufficient large percentage of a population is immune to the infection. The percentage required to reach herd immunity is not some fixed percentage. It is furthermore not solely given by R0, the reproduction number of the particular disease, as measured in a population at the early stages of an epidemic. Instead, the percentage required to reach herd immunity is only dependent on the effective reproduction number, Re, at a specific point in time. The Re can be broken down into serveral contributing factors. First we have the R0, how contagious the disease is, is the starting point, but then there are several other things which influence Re, like social distancing, washing hands, wearing masks, contact tracing and so on. These measures will affect how large percentage will be required to reach herd immunity, and if the measures are effective enough this percentage will go towards zero. An application has been developed to show the effect on how many infected and deceased there will be in total depending on what measures are taken and how effective they are assumed to be.
+R0 is the basic reproduction number: how many persons will on average an infectious person infect, given that nobody in the population is immune (everyone is susceptible). R0 is dependent on several factors such as the how infectious the virus itself is, how many social interactions persons have, and what measures are taken to avoid the spread of the disease. What is not taken into account is that different people behave very differently, and this can have a huge impact on the dynamics of the spread of a disease.
+
+For example, compare two persons, one who has many social interactions and one who is self isolating. It is quite obvisous that the person who has many social interactions also has a higher R0 than the other person. If we take this one step further it can also be assumed that the person who has many social interactions will more likely infect another person who has many social interactions. Therefore it is not enough just to consider R0 for a single person. It is hypothesized that the spreading can be modeled by taking the square root of the product of R0 for the "infecter" and the "infectee". The different R0:s can be assigned to groups of people with similar characteristics, and simulations can be run to see how it looks in a theoretical case.
+
 
 # covid19-simulations
 Different approaches for the simulation of spread and decline of covid19
@@ -60,3 +63,7 @@ From John Hopkins (https://github.com/CSSEGISandData/)
 <p align="center"> 
 <img src="https://github.com/urban-eriksson/covid19-simulations/blob/master/images/data_read_example.png">
 </p>
+
+# What is herd immunity
+
+Herd immunity is a term for the situation when an infectious disease shows a declining spread due to the fact that a sufficient large percentage of a population is immune to the infection. The percentage required to reach herd immunity is not some fixed percentage. It is furthermore not solely given by R0 at the beginning of an epidemic. Instead, the projected percentage required to reach herd immunity is only dependent on the current reproduction number, R, at a specific point in time. The R can be broken down into serveral contributing factors, like social distancing, washing hands, wearing masks, contact tracing and so on. These measures will affect how large percentage will be required to reach herd immunity, and if the measures are effective enough this percentage will go towards zero. A possible project is to develop an application to show the effect on how many infected and deceased there will be in total depending on what measures are taken and how effective the measures are assumed to be in reducing R0.
